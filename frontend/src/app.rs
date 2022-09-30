@@ -107,13 +107,18 @@ fn header<'a>() -> impl Element + Styleable<'a> {
                 .item(Link::new().label("Projects").to("projects")),
         )
         .item(Spacer::fill())
-        .item(make_button(
-            "Email Me",
-            ACCENT_BACK,
-            ACCENT,
-            ACCENT_SHADE,
-            || {},
-        ))
+        .item(
+            Link::new()
+                .label(make_button(
+                    "Email Me",
+                    ACCENT_BACK,
+                    ACCENT,
+                    ACCENT_SHADE,
+                    || {},
+                ))
+                .to("mailto:mpruchn@ncsu.edu")
+                .new_tab(NewTab::new().follow(true)),
+        )
 }
 
 // fn footer() -> impl Element {}
@@ -155,7 +160,7 @@ pub fn make_button(
         .on_click(on_click)
 }
 
-pub fn make_link(
+pub fn make_svg_link(
     label: &str,
     link: &str,
     width: u32,
