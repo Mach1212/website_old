@@ -184,12 +184,12 @@ pub fn svg_link(
     width: u32,
 ) -> Link<link::LabelFlagSet, link::ToFlagSet, RawHtmlEl<HtmlAnchorElement>> {
     Link::new()
-        .label(svg(width, svg_url, description))
+        .label(svg(svg_url, description, width))
         .to(link)
         .new_tab(NewTab::new().follow(true))
 }
 
-pub fn svg(width: u32, svg_url: &str, description: &str) -> impl Element {
+pub fn svg(svg_url: &str, description: &str, width: u32) -> impl Element {
     Image::new()
         .s(Width::exact(width))
         .url(public_url(svg_url))

@@ -1,7 +1,7 @@
 use zoon::named_color::TRANSPARENT;
 use zoon::*;
 
-use crate::app::{svg_link, ACCENT_BACK, CORNER_RADIUS, SIZE, SPACING, TEXT};
+use crate::app::{projects, svg_link, ACCENT_BACK, CORNER_RADIUS, SIZE, SPACING, TEXT};
 
 pub fn page() -> impl Element {
     Column::new()
@@ -58,11 +58,11 @@ fn project(
                 .item(El::new().child(description)),
         )
         .item(
-            El::new().s(Align::new().right()).s(Height::fill()).child(
-                Image::new()
-                    .s(RoundedCorners::all(CORNER_RADIUS))
-                    .url(public_url(image))
-                    .description("An intriguing image"),
-            ),
+            Image::new()
+                .s(Width::fill())
+                .s(Align::new().right())
+                .s(RoundedCorners::all(CORNER_RADIUS))
+                .url(public_url(image))
+                .description("An intriguing image"),
         )
 }

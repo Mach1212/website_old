@@ -1,9 +1,9 @@
 use zoon::named_color::{GRAY_4, TRANSPARENT};
+use zoon::row::MultilineFlagNotSet;
 use zoon::*;
 
-use crate::app::{
-    ACCENT, ACCENT_BACK, ACCENT_SHADE, BACKGROUND, CORNER_RADIUS, SIZE, SPACING, TEXT,
-};
+use crate::app::{ACCENT, ACCENT_BACK, ACCENT_SHADE, CORNER_RADIUS, SIZE, SPACING, TEXT};
+use crate::web_sys::HtmlElement;
 
 pub fn page() -> impl Element {
     Column::new()
@@ -57,7 +57,7 @@ fn introduction() -> impl Element {
                 Image::new()
                     .url(public_url("self_website.jpg"))
                     .description("An image of myself")
-                    .s(Width::growable().max(500))
+                    .s(Width::fill().max(500))
                     .s(RoundedCorners::all(CORNER_RADIUS))
                     .s(Shadows::new([Shadow::new().color(GRAY_4).blur(SPACING[7])])),
             ),
@@ -68,7 +68,7 @@ fn education() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Column::new().item(super::h2("Education")),
+        Row::new().item(super::h2("Education")),
     )
 }
 
@@ -80,11 +80,35 @@ fn experience() -> impl Element {
     )
 }
 
+struct LangData {
+    name: &'static str,
+    svg_url: &'static str,
+}
+
+impl LangData {
+    fn new(name: &'static str, svg_url: &'static str) -> Self {
+        Self { name, svg_url }
+    }
+}
+
 fn languages() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Column::new().item(super::h2("Languages")),
+        Column::new().item(super::h2("Languages")).item(
+            Row::new()
+                .s(Background::new().color(ACCENT_BACK))
+                .s(RoundedCorners::all(CORNER_RADIUS))
+                .s(Padding::new().x(SPACING[7]).y(SPACING[6]))
+                .s(Align::new().center_x())
+                .s(Gap::both(SPACING[6]))
+                .item(super::svg("icons/rust.png", "Rust", SIZE[13]))
+                .item(super::svg("icons/java.png", "Java", SIZE[13]))
+                .item(super::svg("icons/javascript.svg", "Javascript", SIZE[13]))
+                .item(super::svg("icons/typescript.png", "Typescript", SIZE[13]))
+                .item(super::svg("icons/html.svg", "HTML", SIZE[13]))
+                .item(super::svg("icons/css.png", "CSS", SIZE[13])),
+        ),
     )
 }
 
@@ -92,7 +116,37 @@ fn resumes() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Column::new().item(super::h2("Resumes")),
+        Column::new().item(super::h2("Resumes")).item(
+            Row::new()
+                .s(Background::new().color(ACCENT_BACK))
+                .s(RoundedCorners::all(CORNER_RADIUS))
+                .s(Padding::new()
+                    .x(SPACING[7])
+                    .top(SPACING[6])
+                    .bottom(SPACING[5]))
+                .s(Align::new().center_x())
+                .s(Gap::both(SPACING[6]))
+                .item(
+                    Column::new()
+                        .item(super::svg_link(
+                            "icons/pdf.svg",
+                            &public_url("resume.pdf"),
+                            "Resume",
+                            SIZE[13],
+                        ))
+                        .item(El::new().s(Align::center()).child("Human")),
+                )
+                .item(
+                    Column::new()
+                        .item(super::svg_link(
+                            "icons/pdf.svg",
+                            &public_url("ATS Resume.pdf"),
+                            "ATS Resume",
+                            SIZE[13],
+                        ))
+                        .item(El::new().s(Align::center()).child("ATS")),
+                ),
+        ),
     )
 }
 
