@@ -1,7 +1,7 @@
 use zoon::named_color::TRANSPARENT;
 use zoon::*;
 
-use crate::app::{projects, svg_link, ACCENT_BACK, CORNER_RADIUS, SIZE, SPACING, TEXT};
+use crate::app::{projects, svg_link, ACCENT_TINT, CORNER_RADIUS, SIZE, SPACING, TEXT};
 
 pub fn page() -> impl Element {
     Column::new()
@@ -30,7 +30,7 @@ fn project(
     Row::new()
         .s(Gap::both(SPACING[5]))
         .s(Padding::new().x(SPACING[7]).y(SPACING[6]))
-        .s(Background::new().color(ACCENT_BACK))
+        .s(Background::new().color(ACCENT_TINT))
         .s(RoundedCorners::all(CORNER_RADIUS))
         .item(
             Column::new()

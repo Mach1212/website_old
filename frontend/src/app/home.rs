@@ -1,13 +1,16 @@
 use zoon::named_color::{GRAY_4, TRANSPARENT};
-use zoon::row::MultilineFlagNotSet;
+use zoon::row::{EmptyFlagNotSet, MultilineFlagNotSet};
 use zoon::*;
 
-use crate::app::{ACCENT, ACCENT_BACK, ACCENT_SHADE, CORNER_RADIUS, SIZE, SPACING, TEXT};
+use crate::app::{ACCENT, ACCENT_SHADE, ACCENT_TINT, CORNER_RADIUS, SIZE, SPACING, TEXT};
 use crate::web_sys::HtmlElement;
 
 pub fn page() -> impl Element {
     Column::new()
-        .s(Font::new().color(TEXT[0]).size(SIZE[6]))
+        .s(Font::new()
+            .color(TEXT[0])
+            .size(SIZE[6])
+            .family([FontFamily::new("Open Sans"), FontFamily::SansSerif]))
         .item(introduction())
         .item(education())
         .item(experience())
@@ -18,7 +21,7 @@ pub fn page() -> impl Element {
 
 fn introduction() -> impl Element {
     super::section(
-        ACCENT_BACK,
+        ACCENT_TINT,
         0,
         Row::new()
             .s(Padding::new().bottom(SPACING[5]))
@@ -42,7 +45,7 @@ fn introduction() -> impl Element {
                         Link::new()
                             .label(super::make_button(
                                 "Email me",
-                                ACCENT_BACK,
+                                ACCENT_TINT,
                                 ACCENT,
                                 ACCENT_SHADE,
                                 || {},
@@ -80,35 +83,27 @@ fn experience() -> impl Element {
     )
 }
 
-struct LangData {
-    name: &'static str,
-    svg_url: &'static str,
-}
-
-impl LangData {
-    fn new(name: &'static str, svg_url: &'static str) -> Self {
-        Self { name, svg_url }
-    }
-}
-
 fn languages() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Column::new().item(super::h2("Languages")).item(
-            Row::new()
-                .s(Background::new().color(ACCENT_BACK))
-                .s(RoundedCorners::all(CORNER_RADIUS))
-                .s(Padding::new().x(SPACING[7]).y(SPACING[6]))
-                .s(Align::new().center_x())
-                .s(Gap::both(SPACING[6]))
-                .item(super::svg("icons/rust.png", "Rust", SIZE[13]))
-                .item(super::svg("icons/java.png", "Java", SIZE[13]))
-                .item(super::svg("icons/javascript.svg", "Javascript", SIZE[13]))
-                .item(super::svg("icons/typescript.png", "Typescript", SIZE[13]))
-                .item(super::svg("icons/html.svg", "HTML", SIZE[13]))
-                .item(super::svg("icons/css.png", "CSS", SIZE[13])),
-        ),
+        Column::new()
+            .s(Gap::both(SPACING[4]))
+            .item(super::h2("Languages"))
+            .item(
+                Row::new()
+                    .s(Background::new().color(ACCENT_TINT))
+                    .s(RoundedCorners::all(CORNER_RADIUS))
+                    .s(Padding::new().x(SPACING[7]).y(SPACING[6]))
+                    .s(Align::new().center_x())
+                    .s(Gap::both(SPACING[6]))
+                    .item(super::svg("icons/rust.png", "Rust", SIZE[13]))
+                    .item(super::svg("icons/java.png", "Java", SIZE[13]))
+                    .item(super::svg("icons/javascript.svg", "Javascript", SIZE[13]))
+                    .item(super::svg("icons/typescript.png", "Typescript", SIZE[13]))
+                    .item(super::svg("icons/html.svg", "HTML", SIZE[13]))
+                    .item(super::svg("icons/css.png", "CSS", SIZE[13])),
+            ),
     )
 }
 
@@ -118,7 +113,7 @@ fn resumes() -> impl Element {
         SPACING[4],
         Column::new().item(super::h2("Resumes")).item(
             Row::new()
-                .s(Background::new().color(ACCENT_BACK))
+                .s(Background::new().color(ACCENT_TINT))
                 .s(RoundedCorners::all(CORNER_RADIUS))
                 .s(Padding::new()
                     .x(SPACING[7])

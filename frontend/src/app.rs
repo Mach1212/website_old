@@ -59,9 +59,7 @@ pub const CORNER_RADIUS: u32 = 9;
 
 pub const PAGE_WIDTH: u32 = 1500;
 // #edf2ff
-pub const ACCENT_BACK: HSLuv = hsluv! {252.3, 100.0, 95.5};
-// #5c7cfa
-pub const ACCENT_TINT: HSLuv = hsluv! {260.9, 96.1, 55.7};
+pub const ACCENT_TINT: HSLuv = hsluv! {252.3, 100.0, 95.5};
 // #4263eb
 pub const ACCENT: HSLuv = hsluv! {261.9, 87.7, 47.1};
 // #364fc7
@@ -69,8 +67,9 @@ pub const ACCENT_SHADE: HSLuv = hsluv! {262.5, 79.0, 38.7};
 // #343a40 #868e96
 pub const TEXT: [HSLuv; 2] = [hsluv! {237.8, 19.6, 24.1}, hsluv! {236.9, 12.3, 58.6}];
 
-pub const SPACING: [u32; 12] = [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128];
+// Minor third with 10pt base
 pub const SIZE: [u32; 15] = [10, 12, 14, 16, 18, 20, 24, 30, 36, 44, 52, 62, 74, 86, 98];
+pub const SPACING: [u32; 12] = [2, 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128];
 
 /***************************************/
 /* Global styles                         */
@@ -78,7 +77,7 @@ pub const SIZE: [u32; 15] = [10, 12, 14, 16, 18, 20, 24, 30, 36, 44, 52, 62, 74,
 
 pub fn root() -> impl Element {
     Column::new()
-        .item(section(ACCENT_BACK, 0, header()))
+        .item(section(ACCENT_TINT, 0, header()))
         .item(page())
     // .item(footer())
 }
@@ -111,7 +110,7 @@ fn header<'a>() -> impl Element + Styleable<'a> {
             Link::new()
                 .label(make_button(
                     "Email Me",
-                    ACCENT_BACK,
+                    ACCENT_TINT,
                     ACCENT,
                     ACCENT_SHADE,
                     || {},
