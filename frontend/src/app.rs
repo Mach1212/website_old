@@ -1,9 +1,9 @@
-use crate::web_sys::HtmlAnchorElement;
+use crate::web_sys::{HtmlAnchorElement, HtmlImageElement};
 use zoon::button::OnPressFlagNotSet;
 use zoon::column::EmptyFlagNotSet;
 use zoon::el::ChildFlagSet;
+use zoon::image::{DescriptionFlagSet, UrlFlagSet};
 use zoon::web_sys::{HtmlDivElement, HtmlElement};
-use zoon::FontWeight::{Bold, Medium};
 use zoon::*;
 
 mod home;
@@ -23,11 +23,6 @@ pub enum PageId {
 #[static_ref]
 fn page_id() -> &'static Mutable<PageId> {
     Mutable::new(PageId::Unknown)
-}
-
-#[static_ref]
-fn dark_mode() -> &'static Mutable<bool> {
-    Mutable::new(false)
 }
 
 pub fn set_page_id(new_page_id: PageId) {
@@ -108,13 +103,7 @@ fn header<'a>() -> impl Element + Styleable<'a> {
         .item(Spacer::fill())
         .item(
             Link::new()
-                .label(make_button(
-                    "Email Me",
-                    ACCENT_TINT,
-                    ACCENT,
-                    ACCENT_SHADE,
-                    || {},
-                ))
+                .label(button("Email Me", ACCENT_TINT, ACCENT, ACCENT_SHADE, || {}))
                 .to("mailto:mpruchn@ncsu.edu")
                 .new_tab(NewTab::new().follow(true)),
         )
@@ -134,10 +123,14 @@ pub fn section<'a, T: Element + Styleable<'a>>(
         .s(Width::fill())
         .s(Background::new().color(background))
         .s(Padding::new().x(SPACING[2]).top(top_padding))
-        .child(child.s(Width::fill().max(PAGE_WIDTH)).s(Align::center()))
+        .child(
+            child
+                .s(Width::fill().max(PAGE_WIDTH))
+                .s(Align::new().center_x()),
+        )
 }
 
-pub fn make_button(
+pub fn button(
     label: &str,
     color: HSLuv,
     background: HSLuv,
@@ -188,7 +181,11 @@ pub fn svg_link(
         .new_tab(NewTab::new().follow(true))
 }
 
-pub fn svg(svg_url: &str, description: &str, width: u32) -> impl Element {
+pub fn svg(
+    svg_url: &str,
+    description: &str,
+    width: u32,
+) -> Image<UrlFlagSet, DescriptionFlagSet, RawHtmlEl<HtmlImageElement>> {
     Image::new()
         .s(Width::exact(width))
         .url(public_url(svg_url))
@@ -196,7 +193,8 @@ pub fn svg(svg_url: &str, description: &str, width: u32) -> impl Element {
 }
 
 pub fn h2(text: &str) -> impl Element {
-    El::new()
-        .child(text)
-        .s(Font::new().color(ACCENT).size(SIZE[10]))
+    El::new().child(text).s(Font::new()
+        .color(ACCENT)
+        .weight(FontWeight::Medium)
+        .size(SIZE[10]))
 }

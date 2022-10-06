@@ -26,15 +26,14 @@ fn introduction() -> impl Element {
         Row::new()
             .s(Padding::new().bottom(SPACING[5]))
             .s(Gap::new().x(SPACING[1]))
-            .s(Align::center())
             .item(
                 Column::new()
                     .s(Gap::both(SPACING[5]))
                     .item(
                         El::new()
                             .s(Width::fill().max(800))
-                            .child("Hi, I am Maciej Pruchnik, a software engineer")
-                            .s(Font::new().size(SIZE[12]).line_height(SPACING[9])),
+                            .s(Font::new().size(SIZE[12]).line_height(SPACING[9]))
+                            .child("Hi, I am Maciej Pruchnik, a software engineer"),
                     )
                     .item(
                         El::new()
@@ -43,7 +42,7 @@ fn introduction() -> impl Element {
                     )
                     .item(
                         Link::new()
-                            .label(super::make_button(
+                            .label(super::button(
                                 "Email me",
                                 ACCENT_TINT,
                                 ACCENT,
@@ -71,15 +70,100 @@ fn education() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Row::new().item(super::h2("Education")),
+        Column::new()
+            .s(Gap::both(SPACING[4]))
+            .item(super::h2("Education"))
+            .item(education_item(
+                "ncsu.png",
+                90,
+                "2020-08 - 2024-05",
+                "BA in Computer Science",
+                "North Carolina State University, Raleigh, North Carolina",
+                ["Software Engineering(Java), Data Structures(Java), C Programming"].into_iter(),
+            ))
+            .item(education_item(
+                "waketech.png",
+                200,
+                "2019-08 - 2020-05",
+                "Transfer to NCSU",
+                "Waketech, Raleigh, North Carolina",
+                ["Public Speaking", "Deans list in Fall 2019"].into_iter(),
+            ))
+            .item(education_item(
+                "adhs.png",
+                100,
+                "2015-08 - 2019-05",
+                "GED",
+                "Athens Drive Magnet High, Raleigh, North Carolina",
+                [
+                    "AP Computer Science",
+                    "Graduated Cum Laude",
+                    "In the award winning marching band for four years and a section leader for one",
+                    "Co-founded a drone club",
+                ]
+                .into_iter(),
+            )),
     )
+}
+
+fn education_item(
+    logo_url: &str,
+    width: u32,
+    duration: &str,
+    title: &str,
+    location: &str,
+    achievements: impl Iterator<Item = &'static str>,
+) -> Row<EmptyFlagNotSet, MultilineFlagNotSet, RawHtmlEl<HtmlElement>> {
+    Row::new()
+        .s(Background::new().color(ACCENT_TINT))
+        .s(RoundedCorners::all(CORNER_RADIUS))
+        .s(Padding::new().x(SPACING[7]).y(SPACING[6]))
+        .s(Gap::both(SPACING[6]))
+        .item(
+            Column::new()
+                .s(Align::new().top())
+                .item(El::new().child(duration).s(Font::new().no_wrap()))
+                .item(
+                    Image::new()
+                        .s(Width::growable().max(width))
+                        .s(Align::center())
+                        .url(public_url(logo_url))
+                        .description(&(location.to_string() + " logo"))
+                        .update_raw_el(|el| el.style("filter", "grayscale(100)")),
+                ),
+        )
+        .item(
+            Column::new()
+                .s(Align::new().top())
+                .item(
+                    El::new()
+                        .s(Font::new().color(ACCENT).weight(FontWeight::SemiBold))
+                        .child(title),
+                )
+                .item(El::new().s(Font::new().italic()).child(location))
+                .item(
+                    Column::new()
+                        .s(Padding::new().top(SPACING[1]))
+                        .items(achievements.map(|achievement| {
+                            Row::new()
+                                .s(Gap::both(SPACING[1]))
+                                .item(
+                                    El::new()
+                                        .s(Padding::new().left(SPACING[2]))
+                                        .s(Align::new().top())
+                                        .child("•"),
+                                )
+                                .item(El::new().child(achievement))
+                        })),
+                ),
+        )
 }
 
 fn experience() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Column::new().item(super::h2("Experiences")),
+        Column::new().item(super::h2("Experience")),
     )
 }
 
