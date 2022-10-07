@@ -163,8 +163,73 @@ fn experience() -> impl Element {
     super::section(
         TRANSPARENT,
         SPACING[4],
-        Column::new().item(super::h2("Experience")),
+        Column::new()
+            .s(Gap::both(SPACING[4]))
+            .item(super::h2("Experience"))
+            .item(experience_item(
+                "tizbi.png",
+                150,
+                "2019-06 - 2020-02",
+                "Webdev Intern",
+                "Tizbi, Raleigh, North Carolina",
+                ["Created static webpages using NextJS, a Javascript/Typescript full-stack framework, for a business expansion called ForceComprehensive", "Developed an Android app as an internal tool for FlameOffCoating's sales team to estimate paint requirements"].into_iter(),
+            )),
     )
+}
+
+fn experience_item(
+    logo_url: &str,
+    width: u32,
+    duration: &str,
+    title: &str,
+    location: &str,
+    achievements: impl Iterator<Item = &'static str>,
+) -> Row<EmptyFlagNotSet, MultilineFlagNotSet, RawHtmlEl<HtmlElement>> {
+    Row::new()
+        .s(Background::new().color(ACCENT_TINT))
+        .s(RoundedCorners::all(CORNER_RADIUS))
+        .s(Padding::new().x(SPACING[7]).y(SPACING[6]))
+        .s(Gap::both(SPACING[6]))
+        .item(
+            Column::new()
+                .s(Align::new().top())
+                .item(El::new().child(duration).s(Font::new().no_wrap()))
+                .item(
+                    El::new().child(
+                        Image::new()
+                            .s(Width::fill().max(width))
+                            .s(Align::center())
+                            .url(public_url(logo_url))
+                            .description(&(location.to_string() + " logo"))
+                            .update_raw_el(|el| el.style("filter", "grayscale(100)")),
+                    ),
+                ),
+        )
+        .item(
+            Column::new()
+                .s(Align::new().top())
+                .item(
+                    El::new()
+                        .s(Font::new().color(ACCENT).weight(FontWeight::SemiBold))
+                        .child(title),
+                )
+                .item(El::new().s(Font::new().italic()).child(location))
+                .item(
+                    Column::new()
+                        .s(Padding::new().top(SPACING[1]))
+                        .items(achievements.map(|achievement| {
+                            Row::new()
+                                .s(Gap::both(SPACING[1]))
+                                .item(
+                                    El::new()
+                                        .s(Padding::new().left(SPACING[2]))
+                                        .s(Align::new().top())
+                                        .child("•"),
+                                )
+                                .item(El::new().child(achievement))
+                        })),
+                ),
+        )
 }
 
 fn languages() -> impl Element {
