@@ -16,7 +16,6 @@ pub fn page() -> impl Element {
         .item(experience())
         .item(languages())
         .item(resumes())
-        .item(call_to_action())
 }
 
 fn introduction() -> impl Element {
@@ -293,8 +292,4 @@ fn resumes() -> impl Element {
                 ),
         ),
     )
-}
-
-fn call_to_action() -> impl Element {
-    super::section(TRANSPARENT, SPACING[6], El::new().child("Work in progress on the entire site. Built in a Rust framework MoonZoon so development is a bit slow."))
 }
