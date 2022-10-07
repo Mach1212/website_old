@@ -251,7 +251,8 @@ fn languages() -> impl Element {
                     .item(super::svg("icons/javascript.svg", "Javascript", SIZE[13]))
                     .item(super::svg("icons/typescript.png", "Typescript", SIZE[13]))
                     .item(super::svg("icons/html.svg", "HTML", SIZE[13]))
-                    .item(super::svg("icons/css.png", "CSS", SIZE[13])),
+                    .item(super::svg("icons/css.png", "CSS", SIZE[13]))
+                    .item(super::svg("icons/c.png", "C", SIZE[13])),
             ),
     )
 }
