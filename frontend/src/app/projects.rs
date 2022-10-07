@@ -16,7 +16,6 @@ fn projects() -> impl Element {
         )
         .item(Column::new().s(Gap::new().y(SPACING[4])).s(Padding::new().top(SPACING[5]))
             .item(project("Website", "The website you are on now. I designed it in Figma and created it in MoonZoon, a Rust fullstack web framework. It is currently deployed to Netlify, but will be on AWS via the CDK", Some("https://github.com/Mach1212/website.git"), None, "mzoon.svg"))
-            .item(project("Snake", "A snake game written in Bevy a Rust game engine", Some("snake_url"), Some("https://mpruchn.com/snake"), ""))
         ))
 }
 
