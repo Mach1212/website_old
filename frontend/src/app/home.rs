@@ -76,7 +76,7 @@ fn education() -> impl Element {
                 "ncsu.png",
                 90,
                 "2020-08 - 2024-05",
-                "BA in Computer Science",
+                "BS in Computer Science",
                 "North Carolina State University, Raleigh, North Carolina",
                 ["Software Engineering(Java), Data Structures(Java), C Programming"].into_iter(),
             ))
@@ -100,7 +100,7 @@ fn education() -> impl Element {
                     "In the award winning marching band for four years and a section leader for one",
                     "Co-founded a drone club",
                 ]
-                .into_iter(),
+                    .into_iter(),
             )),
     )
 }
